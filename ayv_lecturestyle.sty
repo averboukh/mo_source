@@ -1,0 +1,106 @@
+\ProvidesPackage{ayv_paperstyle}[2016/09/29 Paper style by ayv]
+%%% Параметры:
+%%%   Язык (полная руссификация) russian/english, по умолчанию english.
+%%%   NB: Переход с russian на english вызывает ошибку при наличии русских символов.
+%%%   Кодировка: cp1251 (windows)/utf8 (linux). По умолчанию utf8 как на новых winedt.
+%%% Окружения типа теорема:
+%%%          definition, theorem, lemma, proposition, statement, corollary, property, remark.
+%%% Предопределен счетчик: tmp
+
+\RequirePackage[lmargin=3.5cm, rmargin=2.5cm,tmargin=3.20cm,bmargin=3.40cm,foot=1.7cm]{geometry}
+\RequirePackage{ifpdf}
+\ifpdf
+    \RequirePackage{hyperref}
+\fi
+\RequirePackage{indentfirst}
+\RequirePackage{amsfonts,amssymb,amsthm,amsmath}
+%\RequirePackage{titlesec}
+
+\newtheoremstyle{taskA}
+{3pt} % Space above
+{3pt} % Space below
+{} % Body font
+{} % Indent amount
+{\sffamily\bfseries} % Theorem head font
+{.} % Punctuation after theorem head
+{0.5em} % Space after theorem head
+{} % Theorem head spec (can be left empty, meaning `normal')
+
+
+
+%%%%%%% english/russian. English is by default.
+
+\newif\if@russian\@russianfalse
+\DeclareOption{russian}{
+  \@russiantrue
+  }
+\DeclareOption{english}{
+  \@russianfalse
+  }
+\ExecuteOptions{english}
+
+%%%%%%% utf8/cp1251. UTF8 is by default.
+
+\newif\if@wincode\@wincodefalse
+\DeclareOption{cp1251}{
+  \@wincodetrue
+  }
+\DeclareOption{utf8}{
+  \@wincodefalse
+  }
+\ExecuteOptions{utf8}
+
+\ProcessOptions\relax
+
+\RequirePackage[T1]{fontenc}
+\if@wincode
+    \RequirePackage[cp1251]{inputenc}
+\else
+    \RequirePackage[utf8]{inputenc}
+\fi
+
+
+\if@russian
+    \RequirePackage[english,russian]{babel}
+     \theoremstyle{definition}
+    \newtheorem{definition}{Определение}
+    \theoremstyle{plain}
+    \newtheorem{theorem}{Теорема}
+    \newtheorem{lemma}{Лемма}
+    \newtheorem{proposition}{Предложение}
+    \newtheorem{statement}{Утверждение}
+    \newtheorem{corollary}{Следствие}
+    \newtheorem{property}{Свойство}
+    \theoremstyle{remark}
+    \newtheorem{remark}{Замечание}
+    \newtheorem{example}{Пример}
+    \theoremstyle{taskA}
+    \newtheorem{task}{Упражнение}
+\else
+    \RequirePackage[russian,english]{babel}
+    \theoremstyle{definition}
+    \newtheorem{definition}{Definition}
+    \theoremstyle{plain}
+    \newtheorem{theorem}{Theorem}
+    \newtheorem{lemma}{Lemma}
+    \newtheorem{proposition}{Proposition}
+    \newtheorem{statement}{Statement}
+    \newtheorem{corollary}{Corollary}
+    \newtheorem{property}{Property}
+    \theoremstyle{remark}
+    \newtheorem{remark}{Remark}
+    \newtheorem{example}{Example}
+    \theoremstyle{taskA}
+    \newtheorem{task}{Problem}
+\fi
+
+
+\sloppy
+\newcounter{tmp}
+\newcommand{\arrowAS}{\xrightarrow{\text{п.н.}}}
+\newcommand{\arrowP}{\xrightarrow{P}}
+\newcommand{\arrowLp}[1]{\xrightarrow{L^{#1}}}
+\newcommand{\arrowW}{\xrightarrow{w}}
+\newcommand{\arrowD}{\xrightarrow{d}}
+
+\endinput
